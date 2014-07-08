@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MessagingTutorial</string>
+    <string name="login_activity_label">Sinch Messaging Tutorial</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+
+</resources>

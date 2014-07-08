@@ -1,0 +1,16 @@
+.DS_Store
+.project
+.classpath
+.settings
+.metadata
+*.iml
+**/gen/
+**/target/
+**/bin/
+**/out/
+out/
+pom.xml.versionsBackup
+.idea/
+**/.idea/
+.gradle/
+**/.gradle/
