@@ -12,9 +12,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:orientation="vertical"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,7 +32,9 @@
             android:textSize="32sp"
             android:padding="10dp"
             android:textColor="@color/sinch_purple"
-            android:background="@drawable/inputbox">
+            android:background="@drawable/inputbox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
             <requestFocus/>
         </EditText>
 
@@ -57,23 +57,29 @@
             android:textSize="32sp"
             android:padding="10dp"
             android:textColor="@color/sinch_purple"
-            android:background="@drawable/inputbox">
-    </EditText>
+            android:background="@drawable/inputbox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+        </EditText>
 
-    <Button
-        android:id="@+id/signupButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/button_login"
-        android:minHeight="56dp"
-        android:minWidth="132dp"
-        android:textColor="@color/off_white"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="40dp"
+            android:layout_gravity="center">
 
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_login"/>
+
+            <Button
+                android:id="@+id/signupButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_signup"/>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
