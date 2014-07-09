@@ -14,3 +14,4 @@ pom.xml.versionsBackup
 **/.idea/
 .gradle/
 **/.gradle/
+/local.properties
