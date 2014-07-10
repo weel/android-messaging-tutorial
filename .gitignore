@@ -15,3 +15,5 @@ pom.xml.versionsBackup
 .gradle/
 **/.gradle/
 /local.properties
+build/
+**/build/
