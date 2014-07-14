@@ -22,19 +22,16 @@ public class ListUsersActivity extends Activity {
     private ArrayList<String> names;
     private ListView usersListView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_users);
 
-        currentUserId = ParseUser.getCurrentUser().getObjectId();
-
         setConversationsList();
     }
 
     private void setConversationsList() {
-
+        currentUserId = ParseUser.getCurrentUser().getObjectId();
         names = new ArrayList<String>();
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
@@ -47,8 +44,9 @@ public class ListUsersActivity extends Activity {
                     }
 
                     usersListView = (ListView)findViewById(R.id.usersListView);
-                    namesArrayAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                        R.layout.user_list_item, names);
+                    namesArrayAdapter =
+                        new ArrayAdapter<String>(getApplicationContext(),
+                            R.layout.user_list_item, names);
                     usersListView.setAdapter(namesArrayAdapter);
                 } else {
                     Toast.makeText(getApplicationContext(),
