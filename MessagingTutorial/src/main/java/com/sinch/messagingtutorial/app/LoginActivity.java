@@ -24,6 +24,8 @@ public class LoginActivity extends Activity {
     private EditText passwordField;
     private String username;
     private String password;
+    private Intent intent;
+    private Intent serviceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +33,12 @@ public class LoginActivity extends Activity {
 
         Parse.initialize(this, "IhUPJfNhqBPLns6dXn6BeW3BMfGOlcRElMoYnilM", "1tTdMRSmK74ZzZtYBAPCJFoSbahBxi8cNt6TYj9U");
 
+        intent = new Intent(getApplicationContext(), ListUsersActivity.class);
+        serviceIntent = new Intent(LoginActivity.this, MessageService.class);
+
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
-            Intent intent = new Intent(getApplicationContext(), ListUsersActivity.class);
+            startService(serviceIntent);
             startActivity(intent);
         }
 
@@ -53,7 +58,7 @@ public class LoginActivity extends Activity {
                 ParseUser.logInInBackground(username, password, new LogInCallback() {
                     public void done(ParseUser user, ParseException e) {
                         if (user != null) {
-                            Intent intent = new Intent(getApplicationContext(), ListUsersActivity.class);
+                            startService(serviceIntent);
                             startActivity(intent);
                         } else {
                             Toast.makeText(getApplicationContext(),
@@ -79,7 +84,7 @@ public class LoginActivity extends Activity {
                 user.signUpInBackground(new SignUpCallback() {
                     public void done(ParseException e) {
                         if (e == null) {
-                            Intent intent = new Intent(getApplicationContext(), ListUsersActivity.class);
+                            startService(serviceIntent);
                             startActivity(intent);
                         } else {
                             Toast.makeText(getApplicationContext(),

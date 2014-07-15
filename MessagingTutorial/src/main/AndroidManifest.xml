@@ -24,6 +24,7 @@
             android:name=".ListUsersActivity"
             android:label="@string/title_activity_list_users" >
         </activity>
+        <service android:name=".MessageService"></service>
     </application>
 
 </manifest>
