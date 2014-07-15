@@ -34,7 +34,7 @@ public class LoginActivity extends Activity {
         Parse.initialize(this, "IhUPJfNhqBPLns6dXn6BeW3BMfGOlcRElMoYnilM", "1tTdMRSmK74ZzZtYBAPCJFoSbahBxi8cNt6TYj9U");
 
         intent = new Intent(getApplicationContext(), ListUsersActivity.class);
-        serviceIntent = new Intent(LoginActivity.this, MessageService.class);
+        serviceIntent = new Intent(getApplicationContext(), MessageService.class);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
