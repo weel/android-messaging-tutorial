@@ -55,10 +55,7 @@ public class ListUsersActivity extends Activity {
                     usersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> a, View v, int i, long l) {
-                            Toast.makeText(getApplicationContext(),
-                                "You clicked on user: " + i,
-                                    Toast.LENGTH_SHORT).show();
-                            //Look up user id & open conversation
+                            openConversation(names, i);
                         }
                     });
 
@@ -68,6 +65,24 @@ public class ListUsersActivity extends Activity {
                             Toast.LENGTH_LONG).show();
                 }
             }
+        });
+    }
+
+    public void openConversation(ArrayList<String> names, int pos) {
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereEqualTo("username", names.get(pos));
+        query.findInBackground(new FindCallback<ParseUser>() {
+           public void done(List<ParseUser> user, ParseException e) {
+               if (e == null) {
+                   Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
+                   intent.putExtra("RECIPIENT_ID", user.get(0).getObjectId());
+                   startActivity(intent);
+               } else {
+                   Toast.makeText(getApplicationContext(),
+                       "Error finding that user",
+                           Toast.LENGTH_SHORT).show();
+               }
+           }
         });
     }
 }
