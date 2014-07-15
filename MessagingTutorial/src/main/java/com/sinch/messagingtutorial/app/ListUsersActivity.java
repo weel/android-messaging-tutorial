@@ -3,6 +3,8 @@ package com.sinch.messagingtutorial.app;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -48,6 +50,17 @@ public class ListUsersActivity extends Activity {
                         new ArrayAdapter<String>(getApplicationContext(),
                             R.layout.user_list_item, names);
                     usersListView.setAdapter(namesArrayAdapter);
+
+                    usersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> a, View v, int i, long l) {
+                            Toast.makeText(getApplicationContext(),
+                                "You clicked on user: " + i,
+                                    Toast.LENGTH_SHORT).show();
+                            //Look up user id & open conversation
+                        }
+                    });
+
                 } else {
                     Toast.makeText(getApplicationContext(),
                         "Error loading user list",
