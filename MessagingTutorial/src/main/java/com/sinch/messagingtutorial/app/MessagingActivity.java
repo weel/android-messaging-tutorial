@@ -24,7 +24,6 @@ import java.util.List;
 
 public class MessagingActivity extends Activity implements ServiceConnection, MessageClientListener {
 
-    private String currentUserId;
     private String recipientId;
     private Button sendButton;
     private EditText messageBodyField;
@@ -38,7 +37,6 @@ public class MessagingActivity extends Activity implements ServiceConnection, Me
 
         doBind();
 
-        currentUserId = ParseUser.getCurrentUser().getObjectId().toString();
         Intent intent = getIntent();
         recipientId = intent.getStringExtra("RECIPIENT_ID");
 
