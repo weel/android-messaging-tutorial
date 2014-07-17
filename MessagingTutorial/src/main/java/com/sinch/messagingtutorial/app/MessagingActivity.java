@@ -2,7 +2,6 @@ package com.sinch.messagingtutorial.app;
 
 import android.app.Activity;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.parse.ParseUser;
@@ -29,6 +29,8 @@ public class MessagingActivity extends Activity implements ServiceConnection, Me
     private EditText messageBodyField;
     private String messageBody;
     private MessageService.MessageServiceInterface messageService;
+    private MessageAdapter messageAdapter;
+    private ListView messagesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,10 @@ public class MessagingActivity extends Activity implements ServiceConnection, Me
         setContentView(R.layout.messaging);
 
         doBind();
+
+        messagesList = (ListView) findViewById(R.id.listMessages);
+        messageAdapter = new MessageAdapter(this);
+        messagesList.setAdapter(messageAdapter);
 
         Intent intent = getIntent();
         recipientId = intent.getStringExtra("RECIPIENT_ID");
@@ -106,12 +112,12 @@ public class MessagingActivity extends Activity implements ServiceConnection, Me
 
     @Override
     public void onIncomingMessage(MessageClient client, Message message) {
-        //This is where we will update the UI
+        messageAdapter.addMessage(message, MessageAdapter.DIRECTION_INCOMING);
     }
 
     @Override
     public void onMessageSent(MessageClient client, Message message, String recipientId) {
-        //We will also update the UI here
+        messageAdapter.addMessage(message, MessageAdapter.DIRECTION_OUTGOING);
     }
 
     @Override
