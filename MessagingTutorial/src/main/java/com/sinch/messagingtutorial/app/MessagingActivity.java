@@ -46,8 +46,8 @@ public class MessagingActivity extends Activity implements ServiceConnection, Me
         Intent intent = getIntent();
         recipientId = intent.getStringExtra("RECIPIENT_ID");
 
-        messageBodyField = (EditText) findViewById(R.id.txtTextBody);
-        sendButton = (Button) findViewById(R.id.btnSend);
+        messageBodyField = (EditText) findViewById(R.id.messageBodyField);
+        sendButton = (Button) findViewById(R.id.sendButton);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override

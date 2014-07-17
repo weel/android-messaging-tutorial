@@ -32,20 +32,20 @@
 
         <EditText
                 android:layout_marginBottom="-4dp"
-                android:id="@+id/txtTextBody"
+                android:id="@+id/messageBodyField"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/message_elipses"
                 android:textSize="14sp"
                 android:textColor="@android:color/black"
                 android:layout_marginRight="10dp"
-                android:layout_alignTop="@+id/btnSend"
+                android:layout_alignTop="@+id/sendButton"
                 android:background="@android:color/white"
-                android:layout_alignBottom="@+id/btnSend"
-                android:layout_toLeftOf="@+id/btnSend"/>
+                android:layout_alignBottom="@+id/sendButton"
+                android:layout_toLeftOf="@+id/sendButton"/>
 
         <Button
-                android:id="@+id/btnSend"
+                android:id="@+id/sendButton"
                 android:layout_width="72dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
