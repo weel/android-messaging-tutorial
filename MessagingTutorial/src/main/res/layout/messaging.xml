@@ -3,18 +3,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
-    
+
     <ListView
-            android:id="@+id/lstOldMessages"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/lstNewMessages"
-            android:padding="0dip"
-            android:divider="@null"
-            android:dividerHeight="0dp" android:stackFromBottom="true" tools:listitem="@layout/message_left"/>
-    
-    <ListView
-            android:id="@+id/lstNewMessages"
+            android:id="@+id/listMessages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:transcriptMode="alwaysScroll"
