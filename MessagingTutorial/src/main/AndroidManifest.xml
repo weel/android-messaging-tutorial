@@ -12,7 +12,6 @@
         android:theme="@android:style/Theme.Light.NoTitleBar" >
         <activity
             android:name=".LoginActivity"
-            android:label="@string/login_activity_label"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,10 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ListUsersActivity"
-            android:label="@string/title_activity_list_users" >
-        </activity>
+        <activity android:name=".ListUsersActivity"></activity>
         <service android:name=".MessageService"></service>
         <activity android:name=".MessagingActivity"></activity>
     </application>
