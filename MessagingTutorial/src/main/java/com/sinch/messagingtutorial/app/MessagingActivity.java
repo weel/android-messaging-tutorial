@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -91,6 +92,10 @@ public class MessagingActivity extends Activity implements ServiceConnection, Me
         //Define the messaging service and add a listener
         messageService = (MessageService.MessageServiceInterface) iBinder;
         messageService.addMessageClientListener(this);
+        if (!messageService.isSinchClientStarted()) {
+            Toast.makeText(this, "The message client did not start."
+                ,Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
