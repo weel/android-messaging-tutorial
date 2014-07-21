@@ -6,7 +6,7 @@ The tutorial will walk you throught building an instant messaging app using Sinc
 
 **Requirements**
 
-- An Android phone for testing (2 phones is ideal)
+- Two Android devices (or emulators) for testing
 - Android Studio (download at https://developer.android.com/sdk/installing/studio.html)
 - Some coding experience (preferably Java)
 
