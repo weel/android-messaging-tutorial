@@ -37,8 +37,8 @@ public class MessageService extends Service implements SinchClientListener {
         return super.onStartCommand(intent, flags, startId);
     }
 
-    public void startSinchClient(String userName) {
-        sinchClient = Sinch.getSinchClientBuilder().context(this).userId(userName).applicationKey(APP_KEY)
+    public void startSinchClient(String username) {
+        sinchClient = Sinch.getSinchClientBuilder().context(this).userId(username).applicationKey(APP_KEY)
                 .applicationSecret(APP_SECRET).environmentHost(ENVIRONMENT).build();
 
         sinchClient.addSinchClientListener(this);
