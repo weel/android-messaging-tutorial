@@ -30,7 +30,7 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Parse.initialize(this, "IhUPJfNhqBPLns6dXn6BeW3BMfGOlcRElMoYnilM", "1tTdMRSmK74ZzZtYBAPCJFoSbahBxi8cNt6TYj9U");
+        Parse.initialize(this, "YOUR_APPLICATION_ID", "YOUR_CLIENT_KEY");
 
         intent = new Intent(getApplicationContext(), ListUsersActivity.class);
         serviceIntent = new Intent(getApplicationContext(), MessageService.class);
