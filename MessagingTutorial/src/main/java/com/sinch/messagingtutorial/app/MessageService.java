@@ -84,19 +84,6 @@ public class MessageService extends Service implements SinchClientListener {
     }
 
     @Override
-    public boolean onUnbind(Intent intent) {
-        stop();
-        stopSelf();
-        return super.onUnbind(intent);
-    }
-
-    @Override
-    public void onDestroy() {
-        stop();
-        super.onDestroy();
-    }
-
-    @Override
     public void onLogMessage(int level, String area, String message) {
         //Intentionally left blank
     }

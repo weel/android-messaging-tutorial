@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -74,16 +73,9 @@ public class MessagingActivity extends Activity implements ServiceConnection, Me
         bindService(serviceIntent, this, BIND_AUTO_CREATE);
     }
 
-    private void doUnbind() {
-        if (messageService != null) {
-            messageService.removeMessageClientListener(this);
-        }
-        unbindService(this);
-    }
-
     @Override
     public void onDestroy() {
-        doUnbind();
+        unbindService(this);
         super.onDestroy();
     }
 

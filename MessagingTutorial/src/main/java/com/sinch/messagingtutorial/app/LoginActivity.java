@@ -95,4 +95,10 @@ public class LoginActivity extends Activity {
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(new Intent(getApplicationContext(), MessageService.class));
+    }
 }
