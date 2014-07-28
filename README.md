@@ -10,6 +10,11 @@ The tutorial will walk you throught building an instant messaging app using Sinc
 - Android Studio (download at https://developer.android.com/sdk/installing/studio.html)
 - Some coding experience (preferably Java)
 
+**To run this code**
+- Import into Android Studio
+- Add your Sinch keys to MessagingService.java
+- Add your Parse keys to LoginActivity.java
+
 Tweet us @SinchDev if you have any questions!
 
 
