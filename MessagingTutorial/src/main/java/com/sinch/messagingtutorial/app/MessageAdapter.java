@@ -63,9 +63,9 @@ public class MessageAdapter extends BaseAdapter {
 
         if (convertView == null) {
             int res = 0;
-            if (direction == 0) {
+            if (direction == DIRECTION_INCOMING) {
                 res = R.layout.message_right;
-            } else if (direction == 1) {
+            } else if (direction == DIRECTION_OUTGOING) {
                 res = R.layout.message_left;
             }
             convertView = layoutInflater.inflate(res, viewGroup, false);
