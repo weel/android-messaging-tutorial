@@ -1,6 +1,7 @@
 package com.sinch.messagingtutorial.app;
 
 import android.app.Activity;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,17 +48,29 @@ public class MessageAdapter extends BaseAdapter {
     }
 
     @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
+    @Override
+    public int getItemViewType(int i) {
+        return messages.get(i).second;
+    }
+
+    @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
-        int direction = messages.get(i).second;
+        int direction = getItemViewType(i);
 
         if (convertView == null) {
             int res = 0;
-            if (direction == DIRECTION_INCOMING) {
-                res = R.layout.message_left;
-            } else if (direction == DIRECTION_OUTGOING) {
+            if (direction == 0) {
                 res = R.layout.message_right;
+            } else if (direction == 1) {
+                res = R.layout.message_left;
             }
             convertView = layoutInflater.inflate(res, viewGroup, false);
+        } else if (convertView != null) {
+            Log.d("sinch", "not null");
         }
 
         Message message = messages.get(i).first;
