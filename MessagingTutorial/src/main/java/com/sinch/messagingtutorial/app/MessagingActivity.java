@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.parse.ParseUser;
 import com.sinch.android.rtc.PushPair;
 import com.sinch.android.rtc.messaging.Message;
 import com.sinch.android.rtc.messaging.MessageClient;
@@ -84,10 +83,6 @@ public class MessagingActivity extends Activity implements ServiceConnection, Me
         //Define the messaging service and add a listener
         messageService = (MessageService.MessageServiceInterface) iBinder;
         messageService.addMessageClientListener(this);
-        if (!messageService.isSinchClientStarted()) {
-            Toast.makeText(this, "The message client did not start."
-                ,Toast.LENGTH_LONG).show();
-        }
     }
 
     @Override

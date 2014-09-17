@@ -1,9 +1,13 @@
 package com.sinch.messagingtutorial.app;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,11 +30,31 @@ public class ListUsersActivity extends Activity {
     private ArrayList<String> names;
     private ListView usersListView;
     private Button logoutButton;
+    private ProgressDialog progressDialog;
+    private BroadcastReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_users);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Loading");
+        progressDialog.setMessage("Please wait...");
+        progressDialog.show();
+
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Boolean success = intent.getBooleanExtra("success", false);
+                progressDialog.dismiss();
+                if (!success) {
+                    Toast.makeText(getApplicationContext(), "Messaging service failed to start", Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+
+        LocalBroadcastManager.getInstance(this).registerReceiver((receiver), new IntentFilter("com.sinch.messagingtutorial.app.ListUsersActivity"));
 
         logoutButton = (Button) findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(new View.OnClickListener() {
@@ -97,4 +121,12 @@ public class ListUsersActivity extends Activity {
            }
         });
     }
+
+    @Override
+    public void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
+    }
 }
+
+
