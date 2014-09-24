@@ -30,8 +30,6 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Parse.initialize(this, "key", "secret");
-
         intent = new Intent(getApplicationContext(), ListUsersActivity.class);
         serviceIntent = new Intent(getApplicationContext(), MessageService.class);
 
@@ -94,11 +92,5 @@ public class LoginActivity extends Activity {
                 });
             }
         });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        stopService(new Intent(getApplicationContext(), MessageService.class));
     }
 }
