@@ -31,7 +31,7 @@ public class MessageService extends Service implements SinchClientListener {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        currentUserId = ParseUser.getCurrentUser().getObjectId().toString();
+        currentUserId = ParseUser.getCurrentUser().getObjectId();
 
         if (currentUserId != null && !isSinchClientStarted()) {
             startSinchClient(currentUserId);
@@ -81,14 +81,6 @@ public class MessageService extends Service implements SinchClientListener {
         sinchClient = null;
     }
 
-    public void stop() {
-        if (isSinchClientStarted()) {
-            sinchClient.stop();
-            sinchClient.removeSinchClientListener(this);
-        }
-        sinchClient = null;
-    }
-
     @Override
     public IBinder onBind(Intent intent) {
         return serviceInterface;
@@ -96,12 +88,10 @@ public class MessageService extends Service implements SinchClientListener {
 
     @Override
     public void onLogMessage(int level, String area, String message) {
-        //Intentionally left blank
     }
 
     @Override
     public void onRegistrationCredentialsRequired(SinchClient client, ClientRegistration clientRegistration) {
-        //Intentionally left blank
     }
 
     public void sendMessage(String recipientUserId, String textBody) {
@@ -124,7 +114,6 @@ public class MessageService extends Service implements SinchClientListener {
     }
 
     public class MessageServiceInterface extends Binder {
-
         public void sendMessage(String recipientUserId, String textBody) {
             MessageService.this.sendMessage(recipientUserId, textBody);
         }
@@ -135,6 +124,10 @@ public class MessageService extends Service implements SinchClientListener {
 
         public void removeMessageClientListener(MessageClientListener listener) {
             MessageService.this.removeMessageClientListener(listener);
+        }
+
+        public boolean isSinchClientStarted() {
+            return MessageService.this.isSinchClientStarted();
         }
     }
 }

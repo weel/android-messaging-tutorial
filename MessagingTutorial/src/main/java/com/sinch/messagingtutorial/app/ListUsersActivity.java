@@ -3,10 +3,13 @@ package com.sinch.messagingtutorial.app;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,35 +34,26 @@ public class ListUsersActivity extends Activity {
     private ListView usersListView;
     private Button logoutButton;
     private ProgressDialog progressDialog;
-    private BroadcastReceiver receiver;
+    private BroadcastReceiver receiver = null;
+    private MessageService.MessageServiceInterface sinchService;
+    private Boolean bound = false;
+    private ServiceConnection serviceConnection = new MyServiceConnection();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_users);
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Loading");
-        progressDialog.setMessage("Please wait...");
-        progressDialog.show();
-
-        receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Boolean success = intent.getBooleanExtra("success", false);
-                progressDialog.dismiss();
-                if (!success) {
-                    Toast.makeText(getApplicationContext(), "Messaging service failed to start", Toast.LENGTH_LONG).show();
-                }
-            }
-        };
-
-        LocalBroadcastManager.getInstance(this).registerReceiver((receiver), new IntentFilter("com.sinch.messagingtutorial.app.ListUsersActivity"));
+        if (!bound) {
+            bindService(new Intent(this, MessageService.class), serviceConnection, BIND_AUTO_CREATE);
+            bound = true;
+        }
 
         logoutButton = (Button) findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                stopService(new Intent(getApplicationContext(), MessageService.class));
                 ParseUser.logOut();
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
@@ -69,6 +63,7 @@ public class ListUsersActivity extends Activity {
         setConversationsList();
     }
 
+    //display clickable a list of all users
     private void setConversationsList() {
         currentUserId = ParseUser.getCurrentUser().getObjectId();
         names = new ArrayList<String>();
@@ -104,6 +99,7 @@ public class ListUsersActivity extends Activity {
         });
     }
 
+    //open a conversation with one person
     public void openConversation(ArrayList<String> names, int pos) {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("username", names.get(pos));
@@ -122,10 +118,69 @@ public class ListUsersActivity extends Activity {
         });
     }
 
+    //show a loading spinner while the sinch client starts
+    private void showSpinner() {
+        if (!sinchService.isSinchClientStarted()) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Loading");
+            progressDialog.setMessage("Please wait...");
+            progressDialog.show();
+
+            receiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    Boolean success = intent.getBooleanExtra("success", false);
+                    progressDialog.dismiss();
+                    if (!success) {
+                        Toast.makeText(getApplicationContext(), "Messaging service failed to start", Toast.LENGTH_LONG).show();
+                    }
+                }
+            };
+
+            LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("com.sinch.messagingtutorial.app.ListUsersActivity"));
+        }
+    }
+
+    @Override
+    public void onResume() {
+        if (!bound) {
+            bindService(new Intent(this, MessageService.class), serviceConnection, BIND_AUTO_CREATE);
+            bound = true;
+        }
+        setConversationsList();
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        if (bound) {
+            unbindService(serviceConnection);
+            bound = false;
+        }
+        super.onPause();
+    }
+
     @Override
     public void onDestroy() {
-        unregisterReceiver(receiver);
+        if (bound) {
+            unbindService(serviceConnection);
+            bound = false;
+        }
+
         super.onDestroy();
+    }
+
+    private class MyServiceConnection implements ServiceConnection {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            sinchService = (MessageService.MessageServiceInterface) iBinder;
+            showSpinner();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            sinchService = null;
+        }
     }
 }
 
