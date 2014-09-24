@@ -59,8 +59,6 @@ public class ListUsersActivity extends Activity {
                 startActivity(intent);
             }
         });
-
-        setConversationsList();
     }
 
     //display clickable a list of all users

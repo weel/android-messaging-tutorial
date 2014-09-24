@@ -5,8 +5,7 @@ import com.parse.Parse;
 
 public class MyApplication extends Application {
     @Override
-    public void onCreate()
-    {
+    public void onCreate() {
         super.onCreate();
         Parse.initialize(this, "app-id", "client-key");
 
