@@ -86,7 +86,6 @@ public class MessagingActivity extends Activity {
                 }
             }
         });
-
     }
 
     private void sendMessage() {
