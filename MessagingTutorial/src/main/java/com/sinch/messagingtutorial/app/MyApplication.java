@@ -8,6 +8,5 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Parse.initialize(this, "app-id", "client-key");
-
     }
 }

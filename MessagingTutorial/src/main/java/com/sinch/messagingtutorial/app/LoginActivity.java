@@ -52,7 +52,7 @@ public class LoginActivity extends Activity {
                 password = passwordField.getText().toString();
 
                 ParseUser.logInInBackground(username, password, new LogInCallback() {
-                    public void done(ParseUser user, ParseException e) {
+                    public void done(ParseUser user, com.parse.ParseException e) {
                         if (user != null) {
                             startService(serviceIntent);
                             startActivity(intent);
@@ -78,7 +78,7 @@ public class LoginActivity extends Activity {
                 user.setPassword(password);
 
                 user.signUpInBackground(new SignUpCallback() {
-                    public void done(ParseException e) {
+                    public void done(com.parse.ParseException e) {
                         if (e == null) {
                             startService(serviceIntent);
                             startActivity(intent);

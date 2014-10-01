@@ -60,7 +60,7 @@ public class ListUsersActivity extends Activity {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereNotEqualTo("objectId", currentUserId);
         query.findInBackground(new FindCallback<ParseUser>() {
-            public void done(List<ParseUser> userList, ParseException e) {
+            public void done(List<ParseUser> userList, com.parse.ParseException e) {
                 if (e == null) {
                     for (int i=0; i<userList.size(); i++) {
                         names.add(userList.get(i).getUsername().toString());
@@ -93,7 +93,7 @@ public class ListUsersActivity extends Activity {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("username", names.get(pos));
         query.findInBackground(new FindCallback<ParseUser>() {
-           public void done(List<ParseUser> user, ParseException e) {
+           public void done(List<ParseUser> user, com.parse.ParseException e) {
                if (e == null) {
                    Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
                    intent.putExtra("RECIPIENT_ID", user.get(0).getObjectId());
