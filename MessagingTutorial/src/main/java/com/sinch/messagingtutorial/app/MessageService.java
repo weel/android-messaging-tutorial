@@ -113,6 +113,12 @@ public class MessageService extends Service implements SinchClientListener {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        sinchClient.stopListeningOnActiveConnection();
+        sinchClient.terminate();
+    }
+
     public class MessageServiceInterface extends Binder {
         public void sendMessage(String recipientUserId, String textBody) {
             MessageService.this.sendMessage(recipientUserId, textBody);

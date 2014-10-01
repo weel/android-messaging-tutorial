@@ -285,6 +285,12 @@ Now, it's time to create the Sinch service class, where you will start the Sinch
             }
         }
         
+        @Override
+        public void onDestroy() {
+            sinchClient.stopListeningOnActiveConnection();
+            sinchClient.terminate();
+        }
+        
         //public interface for ListUsersActivity & MessagingActivity
         public class MessageServiceInterface extends Binder {
             public void sendMessage(String recipientUserId, String textBody) {
