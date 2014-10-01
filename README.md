@@ -2,9 +2,9 @@
 
 This tutorial will guide you through building a fully functional instant messaging application using the Sinch Android SDK. By the end of this tutorial, your app will allow users to sign up and log in, see a list of all users, and instant message with any user. Your app will look similar to this:
 
-<img src="images/login.png" style="width:33%;" />
-<img src="images/user-list.png" style="width:33%;" />
-<img src="images/messaging.png" style="width:33%;" />
+<img src="images/login.png" style="width:33%; max-width:33%;" />
+<img src="images/user-list.png" style="width:33%; max-width:33%;" />
+<img src="images/messaging.png" style="width:33%; max-width:33%;" />
 
 The finished source code for this tutorial can be found [on our github](https://github.com/sinch/android-messaging-tutorial).
 
