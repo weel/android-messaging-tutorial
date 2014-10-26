@@ -254,12 +254,6 @@ Now, it's time to create the Sinch service class, where you will start the Sinch
         public void onLogMessage(int level, String area, String message) {}
         
         @Override
-        public void onDestroy() {
-            sinchClient.stopListeningOnActiveConnection();
-            sinchClient.terminate();
-        }
-        
-        @Override
         public IBinder onBind(Intent intent) {
             return serviceInterface;
         }
