@@ -192,7 +192,7 @@ Now, it's time to create the Sinch service class, where you will start the Sinch
         private final MessageServiceInterface serviceInterface = new MessageServiceInterface();
         private SinchClient sinchClient = null;
         private MessageClient messageClient = null;
-        private String currnentUserId;
+        private String currentUserId;
     
         @Override
         public int onStartCommand(Intent intent, int flags, int startId) {
