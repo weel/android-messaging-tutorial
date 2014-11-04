@@ -10,7 +10,9 @@ The finished source code for this tutorial can be found [on our github](https://
 
 To get the ball rolling, I have created a skeleton project that you can clone from [this Github repository](https://github.com/sinch/android-messaging-tutorial-skeleton). This skeleton project  includes: a basic login activity, a login layout, a messaging conversation layout, and some graphics to make things look nice! Go ahead and import the project into Android Studio and run it to make sure everything compiles properly.
 
-If you haven't already, you'll also need to set up developer accounts for [Sinch](#signup)(messaging SDK) and [Parse](http://www.parse.com/signup)(BaaS). For both [Sinch](http://www.sinch.com) and [Parse](http://www.parse.com), you will need to create an app in the developer portal. Hold on to the app keys and secrets that these services generate - you will need them in a few minutes.
+If you haven't already, you'll also need to set up developer accounts for [Sinch](https://www.sinch.com/dashboard/#/signup)(messaging SDK) and [Parse](http://www.parse.com/signup)(BaaS). For both [Sinch](http://www.sinch.com) and [Parse](http://www.parse.com), you will need to create an app in the developer portal. Hold on to the app keys and secrets that these services generate - you will need them in a few minutes.
+
+<div class="sinch-button"><a href="#signup">Signup for Sinch</a></div>
 
 ##2. USER LOGIN WITH PARSE
 
