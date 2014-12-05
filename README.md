@@ -6,7 +6,7 @@ This tutorial will guide you through building a fully functional instant messagi
 
 The finished source code for this tutorial can be found [on our github](https://github.com/sinch/android-messaging-tutorial).
 
-##1. SETUP
+##SETUP
 
 To get the ball rolling, I have created a skeleton project that you can clone from [this Github repository](https://github.com/sinch/android-messaging-tutorial-skeleton). This skeleton project  includes: a basic login activity, a login layout, a messaging conversation layout, and some graphics to make things look nice! Go ahead and import the project into Android Studio and run it to make sure everything compiles properly.
 
@@ -14,7 +14,7 @@ If you haven't already, you'll also need to set up developer accounts for [Sinch
 
 <div class="sinch-button"><a href="#signup">Signup for Sinch</a></div>
 
-##2. USER LOGIN WITH PARSE
+##USER LOGIN WITH PARSE
 
 To begin, you will use Parse to authenticate your users. Follow the quickstart guide at [parse.com/apps/quickstart](https://parse.com/apps/quickstart#parse_data/mobile/android/native/existing) to set up the Parse Android SDK. If you are using Android Studio, be sure to right-click the .jar file and select "Add as library."
 
@@ -100,7 +100,7 @@ When the login screen launches, you'll also want to see if there is already a us
     
 Run your app to make sure that everything is working so far. I suggest temporarily showing a toast message when the buttons are clicked, so you know that they are functioning properly.
     
-##3. SHOW A LIST OF ALL USERS
+##SHOW A LIST OF ALL USERS
     
 When a user logs in, you'll want to launch an activity that shows a list of all users. Create this activity, and call it **ListUsersActivity**. The layout should be a ListView:
 
@@ -178,7 +178,7 @@ In addition, you will need to open a conversation when a user clicks on another 
         });
     }
     
-##4. START THE SINCH CLIENT
+##START THE SINCH CLIENT
 
 To be able to start the Sinch client, you will need to download the latest Android SDK from [www.sinch.com/downloads](http://www.sinch.com/downloads). Then, follow the instructions [here](http://www.sinch.com/docs/android/user-guide/#addthesinchlibrary-androidstudiointellij) to set up the SDK in your project. This shouldn't take more than a few minutes!
     
@@ -325,7 +325,7 @@ For this app, the service doesn't need to be running when the app is closed. Mak
         super.onDestroy();
     }
 
-##5. IS THE SINCH CLIENT STARTED?
+##IS THE SINCH CLIENT STARTED?
 With a slow data/wifi connection, the Sinch client could take a few seconds to start. If a user is really quick to open the app and send a message, there is a small chance that the client won't be started yet, and the message will never send. To provide a better user experience, this section will walk you through showing a loading spinner in ListUsersActivity until the client is started. To do this, MessageService will send a broadcast to ListUsersActivity when the Sinch client is started. When ListUsersActivity gets the broadcast, it will remove the loading message. In MessageService:
 
     private Intent broadcastIntent = new Intent("com.sinch.messagingtutorial.app.ListUsersActivity");
@@ -370,7 +370,7 @@ In **ListUsersActivity**, show the spinner in onCreate, right after loading the 
     
 If you try running your app now, depending on the speed of your connection, you may see only a quick flash of the loading spinner, or it might stick around for a few seconds.
 
-##6. SEND MESSAGES
+##SEND MESSAGES
 
 Now, you will add the messaging feature. Create a new activity, **MessagingActivity**, and start it from **ListUsersActivity**, when a user clicks on another user's name:
 
@@ -463,7 +463,7 @@ Go ahead and try this! You won't see any visual difference right now, since your
 
 <img src="images/dashboard-one-sent-message.png" style="width:95%; display:block; margin:auto;" />
 
-##7. MESSAGE CLIENT LISTENER
+##MESSAGE CLIENT LISTENER
 
 Sinch provides a listener to listen for things like incoming messages and messages that failed to send. Include this in **MessagingActivity** and take a look at the inline comments below to see what's going on:
 
@@ -508,7 +508,7 @@ And in onDestroy, remove the listener:
 
     messageService.removeMessageClientListener(messageClientListener);
 
-##8. DISPLAY THE MESSAGES
+##DISPLAY THE MESSAGES
 
 To display the messages, create a custom list adapter, **MessageAdapter**. This will give your app the feel of a "real" messaging app - with messages from you on the left, and messages from the other person on the right. 
 
@@ -600,7 +600,7 @@ Also display messages as they are sent, in onMessageSent:
     
 At this point, your app is ready to send and receive messages. Run the app on two different devices, log in or sign up as two different users, open the message conversation with each other, and chat! In the next section, you will store the messages in your Parse database, then display message history every time that conversation is opened.
 
-##9. STORE MESSAGES IN PARSE
+##STORE MESSAGES IN PARSE
 
 In **onMessageSent**, you will store the message in your Parse database. Before storing the message, you will first want to make sure that the message doesn't already exist in the database. (If a user un-installs and re-installs an app, Sinch will automatically try to redeliver the last 30 days of received messages, so you don't want to accidentally store them twice.)
 
