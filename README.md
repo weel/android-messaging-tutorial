@@ -325,7 +325,7 @@ For this app, the service doesn't need to be running when the app is closed. Mak
         super.onDestroy();
     }
 
-##HAS THE SINCH CLIENT STARTED?
+##HAS THE SINCH CLIENT STARTED
 With a slow data/wifi connection, the Sinch client could take a few seconds to start. If a user is really quick to open the app and send a message, there is a small chance that the client won't be started yet, and the message will never send. To provide a better user experience, this section will walk you through showing a loading spinner in ListUsersActivity until the client is started. To do this, MessageService will send a broadcast to ListUsersActivity when the Sinch client is started. When ListUsersActivity gets the broadcast, it will remove the loading message. In MessageService:
 
     private Intent broadcastIntent = new Intent("com.sinch.messagingtutorial.app.ListUsersActivity");
