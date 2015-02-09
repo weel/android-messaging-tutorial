@@ -1,6 +1,6 @@
 #BUILD AN ANDROID INSTANT MESSAGING APP USING SINCH AND PARSE
 
-This tutorial will guide you through building a fully functional instant messaging application using the Sinch Android SDK. By the end of this tutorial, your app will allow users to sign up and log in, see a list of all users, and instant message with any user. Your app will look similar to this:
+This tutorial will teach you how to build an instant messaging app for Android using the Sinch Android SDK. By the end of this tutorial, your app will allow users to sign up and log in, see a list of all users, and instant message with any user. Your app will look similar to this:
 
 <img src="images/overview.png" />
 
