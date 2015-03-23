@@ -12,7 +12,7 @@ To get the ball rolling, I have created a skeleton project that you can clone fr
 
 If you haven't already, set up developer accounts for [Sinch](https://www.sinch.com/dashboard/#/signup)(messaging SDK) and [Parse](http://www.parse.com/signup)(BaaS). For both [Sinch](http://www.sinch.com) and [Parse](http://www.parse.com), you will need to create an app in the developer portal. Hold on to the app keys and secrets that these services generate; you will need them in a few minutes.
 
-````<div class="sinch-button"><a href="#signup">Signup for Sinch</a></div>````
+`<div class="sinch-button"><a href="#signup">Signup for Sinch</a></div>`
 
 ##User login with Parse
 
@@ -41,7 +41,6 @@ This is a good time to take a break and run your app. You won't see any visual d
 
 The layout for the login screen is already included in your skeleton project. Use the following Parse methods for login and signup in LoginActivity:
 
-    ````
     loginButton = (Button) findViewById(R.id.loginButton);
     signUpButton = (Button) findViewById(R.id.signupButton);
     usernameField = (EditText) findViewById(R.id.loginUsername);
@@ -93,7 +92,6 @@ The layout for the login screen is already included in your skeleton project. Us
             });
         }
     });
-    ````
     
 When the login screen launches, you'll want to see if there are users already logged in. If there are, go directly to the next activity.
 
@@ -111,7 +109,6 @@ Run your app to ensure everything is working so far. I suggest temporarily showi
     
 When a user logs in, you'll want to launch an activity that shows a list of all users. Create this activity and call it **ListUsersActivity**. The layout should be a ListView:
 
-    ````
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -121,7 +118,6 @@ When a user logs in, you'll want to launch an activity that shows a list of all 
         android:background="#ffffff"
         android:id="@+id/usersListView">
     </ListView>
-    ````
     
 You also need to create a layout file to tell your app how to display each item of the list. In the layout directory, create a new file and name it user_list_item.xml. It will contain only the following text view:
 
