@@ -1,43 +1,47 @@
-#BUILD AN ANDROID INSTANT MESSAGING APP USING SINCH AND PARSE
+#Build an Android Instant Messaging App Using Sinch and Parse
 
-This tutorial will teach you how to build an instant messaging app for Android using the Sinch Android SDK. By the end of this tutorial, your app will allow users to sign up and log in, see a list of all users, and instant message with any user. Your app will look similar to this:
+This tutorial will teach you how to build an instant messaging app for Android using the Sinch Android SDK. By the end of this tutorial, your app will allow users to sign up, log in, see a list of all users and instant message any user. Your app will look similar to this:
 
 <img src="images/overview.png" />
 
-The finished source code for this tutorial can be found [on our github](https://github.com/sinch/android-messaging-tutorial).
+The finished source code for this tutorial can be found [on our GitHub](https://github.com/sinch/android-messaging-tutorial).
 
-##SETUP
+##Setup
 
-To get the ball rolling, I have created a skeleton project that you can clone from [this Github repository](https://github.com/sinch/android-messaging-tutorial-skeleton). This skeleton project  includes: a basic login activity, a login layout, a messaging conversation layout, and some graphics to make things look nice! Go ahead and import the project into Android Studio and run it to make sure everything compiles properly.
+To get the ball rolling, I have created a skeleton project that you can clone from [this GitHub repository](https://github.com/sinch/android-messaging-tutorial-skeleton). This skeleton project includes: a basic login activity, a login layout, a messaging conversation layout and some graphics. Go ahead and import the project into Android Studio. Then run it to make sure everything compiles properly.
 
-If you haven't already, you'll also need to set up developer accounts for [Sinch](https://www.sinch.com/dashboard/#/signup)(messaging SDK) and [Parse](http://www.parse.com/signup)(BaaS). For both [Sinch](http://www.sinch.com) and [Parse](http://www.parse.com), you will need to create an app in the developer portal. Hold on to the app keys and secrets that these services generate - you will need them in a few minutes.
+If you haven't already, set up developer accounts for [Sinch](https://www.sinch.com/dashboard/#/signup)(messaging SDK) and [Parse](http://www.parse.com/signup)(BaaS). For both [Sinch](http://www.sinch.com) and [Parse](http://www.parse.com), you will need to create an app in the developer portal. Hold on to the app keys and secrets that these services generate; you will need them in a few minutes.
 
-<div class="sinch-button"><a href="#signup">Signup for Sinch</a></div>
+````<div class="sinch-button"><a href="#signup">Signup for Sinch</a></div>````
 
-##USER LOGIN WITH PARSE
+##User login with Parse
 
 To begin, you will use Parse to authenticate your users. Follow the quickstart guide at [parse.com/apps/quickstart](https://parse.com/apps/quickstart#parse_data/mobile/android/native/existing) to set up the Parse Android SDK. If you are using Android Studio, be sure to right-click the .jar file and select "Add as library."
 
 Parse requires internet and access to the network state. Add the following permissions in **AndroidManifest.xml**:
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+````
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+````
     
-Now, you need to initialize Parse every time a user launches the app. Therefore, it makes sense to initialize Parse in the onCreate method of the application. Extend the application class, and add the following in onCreate. Replace the placeholders with the application id and client key you got from Parse.
+You must initialize Parse every time a user launches the app. Therefore, it makes sense to initialize Parse in the onCreate method of the application. Extend the application class and add the following in onCreate. Replace the placeholders with the application ID and client key you got from Parse.
 
-
-    public class MyApplication extends Application {
+````
+public class MyApplication extends Application {
         @Override
         public void onCreate() {
             super.onCreate();
             Parse.initialize(this, "app-id", "client-key");
         }
     }
+````
     
-This is a good spot to take a break and run your app. You won't see any visual differences, but its good to make sure that your Parse keys work before moving on!
+This is a good time to take a break and run your app. You won't see any visual differences, but you can check that your Parse keys work before moving on.
 
 The layout for the login screen is already included in your skeleton project. Use the following Parse methods for login and signup in LoginActivity:
 
+    ````
     loginButton = (Button) findViewById(R.id.loginButton);
     signUpButton = (Button) findViewById(R.id.signupButton);
     usernameField = (EditText) findViewById(R.id.loginUsername);
@@ -89,21 +93,25 @@ The layout for the login screen is already included in your skeleton project. Us
             });
         }
     });
+    ````
     
-When the login screen launches, you'll also want to see if there is already a user logged in. If there is, go directly to the next activity.
+When the login screen launches, you'll want to see if there are users already logged in. If there are, go directly to the next activity.
 
-    ParseUser currentUser = ParseUser.getCurrentUser();
-    if (currentUser != null) {
-        //start sinch service
-        //start next activity 
-    }
+````
+ParseUser currentUser = ParseUser.getCurrentUser();
+if (currentUser != null) {
+	//start sinch service
+	//start next activity 
+	}
+````
     
-Run your app to make sure that everything is working so far. I suggest temporarily showing a toast message when the buttons are clicked, so you know that they are functioning properly.
+Run your app to ensure everything is working so far. I suggest temporarily showing a toast message when the buttons are clicked so you know that they are functioning properly.
     
-##SHOW A LIST OF ALL USERS
+##Show a list of all users
     
-When a user logs in, you'll want to launch an activity that shows a list of all users. Create this activity, and call it **ListUsersActivity**. The layout should be a ListView:
+When a user logs in, you'll want to launch an activity that shows a list of all users. Create this activity and call it **ListUsersActivity**. The layout should be a ListView:
 
+    ````
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -113,21 +121,24 @@ When a user logs in, you'll want to launch an activity that shows a list of all 
         android:background="#ffffff"
         android:id="@+id/usersListView">
     </ListView>
+    ````
     
 You also need to create a layout file to tell your app how to display each item of the list. In the layout directory, create a new file and name it user_list_item.xml. It will contain only the following text view:
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+````
+   <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/userListItem"
         android:textColor="#a9a9a9"
         android:padding="16dp"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:textSize="20sp" />
-        
+````
+
 Use a Parse query in ListUsersActivity onCreate to display a list of all other users from your Parse database:
 
-    currentUserId = ParseUser.getCurrentUser().getObjectId();
-    names = new ArrayList<String>();
+	currentUserId = ParseUser.getCurrentUser().getObjectId();
+	names = new ArrayList<String>();
 
     ParseQuery<ParseUser> query = ParseUser.getQuery();
     //don't include yourself
@@ -159,10 +170,11 @@ Use a Parse query in ListUsersActivity onCreate to display a list of all other u
             }
         }
     });
+
     
 In addition, you will need to open a conversation when a user clicks on another user's name:
 
-    public void openConversation(ArrayList<String> names, int pos) {
+      public void openConversation(ArrayList<String> names, int pos) {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("username", names.get(pos));
         query.findInBackground(new FindCallback<ParseUser>() {
@@ -177,12 +189,12 @@ In addition, you will need to open a conversation when a user clicks on another 
            }
         });
     }
-    
-##START THE SINCH CLIENT
 
-To be able to start the Sinch client, you will need to download the latest Android SDK from [www.sinch.com/downloads](http://www.sinch.com/downloads). Then, follow the instructions [here](http://www.sinch.com/docs/android/user-guide/#addthesinchlibrary-androidstudiointellij) to set up the SDK in your project. This shouldn't take more than a few minutes!
+##Start the Sinch client
+
+Starting the Sinch client should only take a few minutes. Download the latest Android SDK from [www.sinch.com/downloads](http://www.sinch.com/downloads) and then follow the instructions [here](http://www.sinch.com/docs/android/user-guide/#addthesinchlibrary-androidstudiointellij) to set up the SDK in your project. 
     
-Now, it's time to create the Sinch service class, where you will start the Sinch client when a user logs in. Once started, the Sinch client will run in the background while the app is open, and will be used to send and receive messages. Create the class **MessageService** (don't forget to declare the service in the manifest file!), and begin by starting the Sinch client:
+Now it's time to create the Sinch service class, where you will start the Sinch client when a user logs in. Once started, the Sinch client will run in the background while the app is open and will be used to send and receive messages. Create the class **MessageService** (remember to declare the service in the manifest file) and begin by starting the Sinch client:
 
     public class MessageService extends Service implements SinchClientListener {
     
@@ -307,7 +319,7 @@ Now, it's time to create the Sinch service class, where you will start the Sinch
     
 Be sure to replace "key" and "secret" with the app key and secret from your Sinch dashboard.
 
-Next, start the list users activity and the message service when a user logs in or signs up, or when a current user is found:
+Next, start the ListUsersActivity and the MessageService when a user logs in or signs up, or when a current user is found:
 
     final Intent intent = new Intent(getApplicationContext(), ListUsersActivity.class);
     final Intent serviceIntent = new Intent(getApplicationContext(), MessageService.class);
@@ -315,9 +327,9 @@ Next, start the list users activity and the message service when a user logs in 
     startService(serviceIntent);
     startActivity(intent);
 
-Try running your app now! Once you get to the list users activity, the service should be running. You can check this by going to your phone's **settings**/**apps**/**running**, and you should see that your app has 1 service running.
+Try running your app now. Once you get to the list users activity, the service should be running. You can check this by going to your phone's **Settings**>**Apps**>**Running** and you should see that your app has one service running.
 
-For this app, the service doesn't need to be running when the app is closed. Make sure to stop the service when **LoginActivity** is destroyed (will always get called when the app is killed):
+For this app, the service doesn't need to be running when the app is closed. Make sure to stop the service when **LoginActivity** is destroyed. (It will always get called when the app is killed.)
 
     @Override
     public void onDestroy() {
@@ -325,10 +337,12 @@ For this app, the service doesn't need to be running when the app is closed. Mak
         super.onDestroy();
     }
 
-##HAS THE SINCH CLIENT STARTED
-With a slow data/wifi connection, the Sinch client could take a few seconds to start. If a user is really quick to open the app and send a message, there is a small chance that the client won't be started yet, and the message will never send. To provide a better user experience, this section will walk you through showing a loading spinner in ListUsersActivity until the client is started. To do this, MessageService will send a broadcast to ListUsersActivity when the Sinch client is started. When ListUsersActivity gets the broadcast, it will remove the loading message. In MessageService:
+##Has the Sinch client started?
+With a slow data or Wi-Fi connection, the Sinch client could take a few seconds to start. If a user quickly opens the app and sends a message, there is a small chance the client won't be started yet and the message will never send. To provide a better user experience, show a loading spinner in ListUsersActivity until the client is started. 
 
-    private Intent broadcastIntent = new Intent("com.sinch.messagingtutorial.app.ListUsersActivity");
+To do this, MessageService will send a broadcast to ListUsersActivity when the Sinch client is started. When ListUsersActivity gets the broadcast, it will remove the loading message. In MessageService:
+
+	private Intent broadcastIntent = new Intent("com.sinch.messagingtutorial.app.ListUsersActivity");
     private LocalBroadcastManager broadcaster;
     
     //onStartCommand
@@ -346,7 +360,7 @@ Bind ListUsersActivity, bind to MessageService, so you can see if the Sinch clie
     
 In **ListUsersActivity**, show the spinner in onCreate, right after loading the layout:
 
-    progressDialog = new ProgressDialog(this);
+	progressDialog = new ProgressDialog(this);
     progressDialog.setTitle("Loading");
     progressDialog.setMessage("Please wait...");
     progressDialog.show();
@@ -368,11 +382,11 @@ In **ListUsersActivity**, show the spinner in onCreate, right after loading the 
     };
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("com.sinch.messagingtutorial.app.ListUsersActivity"));
     
-If you try running your app now, depending on the speed of your connection, you may see only a quick flash of the loading spinner, or it might stick around for a few seconds.
+Depending on your connection speed, when you try to run the app now, you may see the loading spinner for only a flash or as long as a few seconds.
 
-##SEND MESSAGES
+##Send messages
 
-Now, you will add the messaging feature. Create a new activity, **MessagingActivity**, and start it from **ListUsersActivity**, when a user clicks on another user's name:
+Now let’s add the messaging feature. Create a new activity, **MessagingActivity**, and start it from **ListUsersActivity** when a user clicks on another user's name:
 
     public void openConversation(ArrayList<String> names, int pos) {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
@@ -394,7 +408,7 @@ Now, you will add the messaging feature. Create a new activity, **MessagingActiv
     
 Note: Included in the skeleton project is the layout file **messaging.xml**; use this instead of the one that is generated when you create MessagingActivity.
 
-Below, you will bind the messaging activity to the message service, so that your activity can interact with the service to send messages.
+Below, you will bind the messaging activity to the message service so that your activity can interact with the service to send messages.
 
     public class MessagingActivity extends Activity {
 
@@ -448,7 +462,7 @@ Below, you will bind the messaging activity to the message service, so that your
         }
     }
     
-In **MessagingActivity**, you are now ready to send your first message! When the send button is clicked, make sure the text field isn't empty, send the message, then set the text field to be empty:
+In **MessagingActivity**, you are now ready to send your first message. When you click the send button, make sure the text field isn't empty and send the message. Then set the text field to be empty:
 
     messageBody = messageBodyField.getText().toString();
     if (messageBody.isEmpty()) {
@@ -459,13 +473,13 @@ In **MessagingActivity**, you are now ready to send your first message! When the
     messageService.sendMessage(recipientId, messageBody);
     messageBodyField.setText("");
     
-Go ahead and try this! You won't see any visual difference right now, since your app doesn't yet have a way to display the messages. However, you can look at your [Sinch dashboard](http://www.sinch.com/dashboard/#/dashboard) to see that a message has been sent. Make sure that the date range of the graph includes today's date.
+Go ahead and try this. You won't see any difference since your app doesn't yet have a way to display the messages. However, you can look at your [Sinch dashboard](http://www.sinch.com/dashboard/#/dashboard) to see that a message has been sent. Make sure that the date range of the graph includes today's date.
 
-<img src="images/dashboard-one-sent-message.png" style="width:95%; display:block; margin:auto;" />
+`<img src="images/dashboard-one-sent-message.png" style="width:95%; display:block; margin:auto;" />`
 
-##MESSAGE CLIENT LISTENER
+##Message center listener
 
-Sinch provides a listener to listen for things like incoming messages and messages that failed to send. Include this in **MessagingActivity** and take a look at the inline comments below to see what's going on:
+Sinch provides a listener to listen for things such as incoming messages and messages that failed to send. Include this in **MessagingActivity** and take a look at the inline comments below to see what's going on:
 
     private class MyMessageClientListener implements MessageClientListener {
     
@@ -502,15 +516,15 @@ Sinch provides a listener to listen for things like incoming messages and messag
     
 Then, in onServiceConnected, add an instance of the listener:
 
-    messageService.addMessageClientListener(messageClientListener);
+`messageService.addMessageClientListener(messageClientListener);`
     
 And in onDestroy, remove the listener:
 
-    messageService.removeMessageClientListener(messageClientListener);
+`messageService.removeMessageClientListener(messageClientListener);`
 
-##DISPLAY THE MESSAGES
+##Display the messages
 
-To display the messages, create a custom list adapter, **MessageAdapter**. This will give your app the feel of a "real" messaging app - with messages from you on the left, and messages from the other person on the right. 
+To display the messages, create a custom list adapter, **MessageAdapter**. This will give your app the feel of a "real" messaging app, with messages from you on the left, and messages from the other person on the right. 
 
     public class MessageAdapter extends BaseAdapter {
 
@@ -593,16 +607,18 @@ In onIncomingMessage, display the message as an incoming message:
         messageAdapter.addMessage(writableMessage, MessageAdapter.DIRECTION_INCOMING);
     }
     
-Also display messages as they are sent, in onMessageSent:
+Also display messages as they are sent in onMessageSent:
 
     WritableMessage writableMessage = new WritableMessage(message.getRecipientIds().get(0), message.getTextBody());
     messageAdapter.addMessage(writableMessage, MessageAdapter.DIRECTION_OUTGOING);
     
-At this point, your app is ready to send and receive messages. Run the app on two different devices, log in or sign up as two different users, open the message conversation with each other, and chat! In the next section, you will store the messages in your Parse database, then display message history every time that conversation is opened.
+At this point, your app is ready to send and receive messages. Run the app on two different devices by logging in or signing up as two different users. Then open the message conversation with each other and chat. 
 
-##STORE MESSAGES IN PARSE
+In the next section, you will store the messages in your Parse database and display the message history every time that conversation is opened.
 
-In **onMessageSent**, you will store the message in your Parse database. Before storing the message, you will first want to make sure that the message doesn't already exist in the database. (If a user un-installs and re-installs an app, Sinch will automatically try to redeliver the last 30 days of received messages, so you don't want to accidentally store them twice.)
+##Store messages in Parse
+
+In **onMessageSent**, you will store the message in your Parse database. But before storing the message, you want to make sure that the message doesn't already exist in the database. (If a user uninstalls and reinstalls an app, Sinch will automatically try to redeliver the last 30 days of received messages, so you don't want to accidentally store them twice.)
 
     final WritableMessage writableMessage = new WritableMessage(message.getRecipientIds().get(0), message.getTextBody());
 
@@ -627,7 +643,7 @@ In **onMessageSent**, you will store the message in your Parse database. Before 
         }
     });
     
-Important: Notice that the message is now only added to the view if it doesn't already exist in the Parse database. Why? Because now you are going to display the previous messages from a conversation. I'll refer to this as the "message history." 
+Important: Notice that the message is only added to the view if it doesn't already exist in the Parse database. This is because you are now going to display the previous messages from a conversation, referred to as the "message history." 
 
 The code below finds all ParseMessages that were sent between the current user and the recipient of the current conversation, and orders them so that the newest messages will appear at the bottom of the screen. Next, it goes through the array of messages and displays them on the left or right side of the screen, depending on whether they are incoming or outgoing. Put this in onCreate, after the message adapter has been set.
 
@@ -652,27 +668,6 @@ The code below finds all ParseMessages that were sent between the current user a
         }
     });
     
-If you're interested in learning more about Parse queries, you can read about them [here](https://parse.com/docs/android_guide#queries). 
+Read more about Parse queries [here](https://parse.com/docs/android_guide#queries). 
 
-You can now send messages between two users without the messaging screen being open. Ex: User A can send a message to User B. User B can open the app 3 weeks later and see the message that User A sent, since you now store the messages as they are sent.
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
- 
- 
- 
- 
- 
- 
- 
- 
- 
-    
+You can now send messages between two users without the messaging screen being open. For example, User A can send a message to User B. User B can open the app three weeks later and see the message from User A since messages are stored as they are sent.
