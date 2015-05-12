@@ -110,36 +110,36 @@ Run your app to ensure everything is working so far. I suggest temporarily showi
 When a user logs in, you'll want to launch an activity that shows a list of all users. Create this activity and call it **ListUsersActivity**. The layout should be a ListView:
 
 ````
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    xmlns:tools="http://schemas.android.com/tools"
-	    tools:context="com.sinch.messagingtutorial.app.ListUsersActivity"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:orientation="vertical" >
-	    
-	    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-	        xmlns:tools="http://schemas.android.com/tools"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:padding="16dp"
-	        tools:context="com.example.messagingtutorial.app.ListUsersActivity"
-	        android:background="#ffffff"
-	        android:id="@+id/usersListView">
-	    </ListView>
-	    
-	</LinearLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.sinch.messagingtutorial.app.ListUsersActivity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        tools:context="com.example.messagingtutorial.app.ListUsersActivity"
+        android:background="#ffffff"
+        android:id="@+id/usersListView">
+    </ListView>
+    
+</LinearLayout>
 ````
     
 You also need to create a layout file to tell your app how to display each item of the list. In the layout directory, create a new file and name it user_list_item.xml. It will contain only the following text view:
 
 ````
-   <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/userListItem"
-        android:textColor="#a9a9a9"
-        android:padding="16dp"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:textSize="20sp" />
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/userListItem"
+	android:textColor="#a9a9a9"
+	android:padding="16dp"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:textSize="20sp" />
 ````
 
 Use a Parse query in ListUsersActivity onCreate to display a list of all other users from your Parse database:
