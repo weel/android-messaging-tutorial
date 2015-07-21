@@ -2,7 +2,7 @@
 
 This tutorial will teach you how to build an instant messaging app for Android using the Sinch Android SDK. By the end of this tutorial, your app will allow users to sign up, log in, see a list of all users and instant message any user. Your app will look similar to this:
 
-<img src="images/overview.png" />
+![overview](images/phones.png)
 
 The finished source code for this tutorial can be found [on our GitHub](https://github.com/sinch/android-messaging-tutorial).
 
@@ -482,7 +482,7 @@ In **MessagingActivity**, you are now ready to send your first message. When you
     
 Go ahead and try this. You won't see any difference since your app doesn't yet have a way to display the messages. However, you can look at your [Sinch dashboard](http://www.sinch.com/dashboard/#/dashboard) to see that a message has been sent. Make sure that the date range of the graph includes today's date.
 
-`<img src="images/dashboard-one-sent-message.png" style="width:95%; display:block; margin:auto;" />`
+![sinch dashboard](images/dashboard-screenshot.png)
 
 ##Message center listener
 
