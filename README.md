@@ -55,8 +55,8 @@ The layout for the login screen is already included in your skeleton project. Us
             ParseUser.logInInBackground(username, password, new LogInCallback() {
                 public void done(ParseUser user, com.parse.ParseException e) {
                     if (user != null) {
-                        //start sinch service
                         //start next activity 
+                        //start sinch service
                     } else {
                         Toast.makeText(getApplicationContext(),
                             "There was an error logging in.",
@@ -81,8 +81,8 @@ The layout for the login screen is already included in your skeleton project. Us
             user.signUpInBackground(new SignUpCallback() {
                 public void done(com.parse.ParseException e) {
                     if (e == null) {
-                        //start sinch service
-                        //start next activity 
+                       //start next activity 
+                       //start sinch service
                     } else {
                         Toast.makeText(getApplicationContext(),
                             "There was an error signing up."
@@ -98,8 +98,8 @@ When the login screen launches, you'll want to see if there are users already lo
 ````
 ParseUser currentUser = ParseUser.getCurrentUser();
 if (currentUser != null) {
-	//start sinch service
-	//start next activity 
+	//start next activity
+	//start sinch service 
 	}
 ````
     
@@ -331,8 +331,8 @@ Next, start the ListUsersActivity and the MessageService when a user logs in or 
     final Intent intent = new Intent(getApplicationContext(), ListUsersActivity.class);
     final Intent serviceIntent = new Intent(getApplicationContext(), MessageService.class);
     
-    startService(serviceIntent);
     startActivity(intent);
+    startService(serviceIntent);
 
 Try running your app now. Once you get to the list users activity, the service should be running. You can check this by going to your phone's **Settings**>**Apps**>**Running** and you should see that your app has one service running.
 
