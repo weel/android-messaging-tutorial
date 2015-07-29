@@ -34,8 +34,8 @@ public class LoginActivity extends Activity {
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
-            startService(serviceIntent);
             startActivity(intent);
+            startService(serviceIntent);
         }
 
         setContentView(R.layout.activity_login);
@@ -54,8 +54,8 @@ public class LoginActivity extends Activity {
                 ParseUser.logInInBackground(username, password, new LogInCallback() {
                     public void done(ParseUser user, com.parse.ParseException e) {
                         if (user != null) {
-                            startService(serviceIntent);
                             startActivity(intent);
+                            startService(serviceIntent);
                         } else {
                             Toast.makeText(getApplicationContext(),
                                 "Wrong username/password combo",
@@ -80,8 +80,8 @@ public class LoginActivity extends Activity {
                 user.signUpInBackground(new SignUpCallback() {
                     public void done(com.parse.ParseException e) {
                         if (e == null) {
-                            startService(serviceIntent);
                             startActivity(intent);
+                            startService(serviceIntent);
                         } else {
                             Toast.makeText(getApplicationContext(),
                                 "There was an error signing up."
