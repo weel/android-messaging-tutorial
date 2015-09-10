@@ -127,38 +127,40 @@ public class MessagingActivity extends Activity {
         }
 
         @Override
-        public void onIncomingMessage(MessageClient client, Message message) {
+        public void onIncomingMessage(MessageClient client, final Message message) {
             if (message.getSenderId().equals(recipientId)) {
-                WritableMessage writableMessage = new WritableMessage(message.getRecipientIds().get(0), message.getTextBody());
-                messageAdapter.addMessage(writableMessage, MessageAdapter.DIRECTION_INCOMING);
+                final WritableMessage writableMessage = new WritableMessage(message.getRecipientIds().get(0), message.getTextBody());
+    
+                //only add message to parse database if it doesn't already exist there
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseMessage");
+                query.whereEqualTo("sinchId", message.getMessageId());
+                query.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> messageList, com.parse.ParseException e) {
+                        if (e == null) {
+                            if (messageList.size() == 0) {
+                                ParseObject parseMessage = new ParseObject("ParseMessage");
+                                parseMessage.put("senderId", currentUserId);
+                                parseMessage.put("recipientId", writableMessage.getRecipientIds().get(0));
+                                parseMessage.put("messageText", writableMessage.getTextBody());
+                                parseMessage.put("sinchId", message.getMessageId()); 
+                                parseMessage.saveInBackground();
+    
+                                messageAdapter.addMessage(writableMessage, MessageAdapter.DIRECTION_INCOMING);
+                            }
+                        }
+                    }
+                });
             }
         }
 
         @Override
         public void onMessageSent(MessageClient client, Message message, String recipientId) {
-
-            final WritableMessage writableMessage = new WritableMessage(message.getRecipientIds().get(0), message.getTextBody());
-
-            //only add message to parse database if it doesn't already exist there
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseMessage");
-            query.whereEqualTo("sinchId", message.getMessageId());
-            query.findInBackground(new FindCallback<ParseObject>() {
-                @Override
-                public void done(List<ParseObject> messageList, com.parse.ParseException e) {
-                    if (e == null) {
-                        if (messageList.size() == 0) {
-                            ParseObject parseMessage = new ParseObject("ParseMessage");
-                            parseMessage.put("senderId", currentUserId);
-                            parseMessage.put("recipientId", writableMessage.getRecipientIds().get(0));
-                            parseMessage.put("messageText", writableMessage.getTextBody());
-                            parseMessage.put("sinchId", writableMessage.getMessageId());
-                            parseMessage.saveInBackground();
-
-                            messageAdapter.addMessage(writableMessage, MessageAdapter.DIRECTION_OUTGOING);
-                        }
-                    }
-                }
-            });
+          
+          
+          
+          final WritableMessage writableMessage = new WritableMessage(message.getRecipientIds().get(0), message.getTextBody());
+          messageAdapter.addMessage(writableMessage, MessageAdapter.DIRECTION_OUTGOING);
         }
 
         @Override
@@ -168,7 +170,3 @@ public class MessagingActivity extends Activity {
         public void onShouldSendPushData(MessageClient client, Message message, List<PushPair> pushPairs) {}
     }
 }
-
-
-
-
