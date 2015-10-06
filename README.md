@@ -12,7 +12,7 @@ To get the ball rolling, I have created a skeleton project that you can clone fr
 
 If you haven't already, set up developer accounts for [Sinch](https://www.sinch.com/dashboard/#/signup)(messaging SDK) and [Parse](http://www.parse.com/signup)(BaaS). For both [Sinch](http://www.sinch.com) and [Parse](http://www.parse.com), you will need to create an app in the developer portal. Hold on to the app keys and secrets that these services generate; you will need them in a few minutes.
 
-`<div class="sinch-button"><a href="#signup">Signup for Sinch</a></div>`
+[Get Started with Sinch](https://www.sinch.com/signup)
 
 ##User login with Parse
 
