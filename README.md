@@ -1,5 +1,9 @@
 #Build an Android Instant Messaging App Using Sinch and Parse
 
+##
+
+Facebook has announced that Parse is being discontinued at the end of 2016. Azure is a great replacement and has a guide to migrating to their platform. For more information [click here](https://azure.microsoft.com/en-us/blog/azure-welcomes-parse-developers/), or check out the [Parse server migration](https://github.com/ParsePlatform/parse-server/wiki/Migrating-an-Existing-Parse-App) guide.
+
 This tutorial will teach you how to build an instant messaging app for Android using the Sinch Android SDK. By the end of this tutorial, your app will allow users to sign up, log in, see a list of all users and instant message any user. Your app will look similar to this:
 
 ![overview](images/android-phones.png)
